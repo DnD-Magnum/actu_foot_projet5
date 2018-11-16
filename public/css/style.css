@@ -1,0 +1,103 @@
+/*===  GENERAL  ===*/
+
+.block_page
+{
+	width: 80%;
+	margin: 20px auto;
+}
+
+.min_title
+{
+	font-size: 0.7em;
+}
+
+h1, h2, h3
+{
+	text-align: center;
+}
+
+h1
+{
+	margin: 50px auto;
+}
+
+h2
+{
+	margin: 20px auto;
+}
+
+
+/*===  ACCUEIL  ===*/
+
+.home-page-posts
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.para-acceuil
+{
+    margin: 0 auto;
+    font-size: 1.4em;
+    text-align: justify;
+    width: 95%;
+}
+
+.news
+{
+    margin-top: 100px;
+}
+
+
+/*===  ADMIN  ===*/
+
+#editeur
+{
+    width: 500px; 
+    height: 200px; 
+    border: 1px solid black; 
+    padding: 5px; 
+    overflow: auto; 
+}
+
+
+/*===  CHAPITRE  ===*/
+
+.posts
+{
+	text-align: justify;
+    margin: 20px auto;
+}
+
+
+/*===  CHAPITRE  ===*/
+
+.contact
+{
+    text-align: center;
+}
+
+.contact h3
+{
+    margin: 40px auto;
+}
+
+.contact p
+{
+    font-size: 1.3em;
+}
+
+
+/*=====  PETITE RéSOLUTION  =====*/
+
+@media screen and (max-width: 640px) 
+{
+
+	/*===  GENERAL  ===*/
+    .block_page 
+    {
+  		width: 95%;
+    }
+
+}
