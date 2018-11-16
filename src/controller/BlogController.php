@@ -123,7 +123,9 @@ class BlogController extends \blogApp\core\Controller
 
 			$this->render('frontend/categoriepostsview', [
 				'categorie' => $posts[0],
-		        'posts' => $posts[1]
+		        'posts' => $posts[1],
+		        'totalPages' => $posts[2],
+		        'currentPage' => $posts[3]
 		    ]);
 		}
 		

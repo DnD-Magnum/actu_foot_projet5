@@ -37,4 +37,20 @@ foreach ($posts as $post):
 	</div>
 <?php
 endforeach;
+// ===> PAGINATION
 ?>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+	<?php
+	if ($totalPages > 1){
+		for ($i = 1; $i <= $totalPages; $i++) { 
+			if ($i == $currentPage) {
+				echo "<li class='page-item disabled'><a class='page-link' href='#'>" . $i . "</a></li>";
+			} else {
+				echo "<li class='page-item'><a class='page-link' href='" . PATH_PREFIX . "/categorie/" . $categorie['name'] . "?id=" . $categorie['id'] . "&page=" . $i . "'> " . $i . " </a></li> ";
+			}
+		}
+	}
+	?>
+  </ul>
+</nav>
