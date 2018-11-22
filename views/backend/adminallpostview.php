@@ -6,25 +6,25 @@
 
 
 <!-- ===  LISTE DE TOUS LES POTS  === -->
+<h1>Modifier les articles</h1>
+<p>=====================</p>
 <?php
 foreach ($posts as $post):
 ?>
 	<div>
-		<h2>
+		<h2 class="title-post-admin-home">
 			<a href="<?= PATH_PREFIX ?>/admin/modifier-post?id=<?= $post['id'] ?>"><?= htmlspecialchars($post['title']); ?></a>
 		</h2>
-			    
-		<p class="chapter">
-			<?= $post['post']; ?>
-		</p>
+				    
 		<p>
 			<?= htmlspecialchars($post['author']); ?>
 			<em>le <?= $post['date_creation_fr']; ?></em>
 		</p>
 		<p>
 			<em><a href="<?= PATH_PREFIX ?>/admin/modifier-post?id=<?= $post['id'] ?>">Modifier / suprimer post | moderer commentaire</a></em>
-		</p>
+		</p>	
 	</div>
+	<p>=====================</p>
 <?php
 endforeach;
 // ===> PAGINATION

@@ -25,7 +25,7 @@ class CategorieManager extends \blogApp\core\Model
      * @param id de la categorie $number
      * Retourne la variable $totalPosts 
      */
-	public function commentCount($categorieId)
+	public function postCategorieCount($categorieId)
 	{
 		$totalPostsReq = $this->db->prepare('SELECT COUNT(id) FROM posts WHERE id_categorie = ?');
 		$totalPostsReq->execute([$categorieId]);
@@ -40,7 +40,7 @@ class CategorieManager extends \blogApp\core\Model
 	public function getCategoriePosts($categorieId)
 	{
 		$nbPostPage = 5;
-		$totalPosts = $this->commentCount($categorieId);
+		$totalPosts = $this->postCategorieCount($categorieId);
 		$totalPages = ceil($totalPosts/$nbPostPage);
 
 		if (isset($_GET['page']) && !empty($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $totalPages) {

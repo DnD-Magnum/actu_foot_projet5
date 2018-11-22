@@ -3,6 +3,7 @@ namespace blogApp\src\controller;
 use \blogApp\src\model\CommentManager;
 use \blogApp\src\model\PostManager;
 use \blogApp\src\model\AdminManager;
+use \blogApp\src\model\CategorieManager;
 /**
  * Class AdminController
  * Controller qui gere la partie admin
@@ -20,7 +21,13 @@ class AdminController extends \blogApp\core\Controller
 	 */
 	public function editPost()
 	{
-		$this->render('backend/createpostview');
+		$categorieManager = new CategorieManager();
+
+		$categories = $categorieManager->getCategories();
+
+		$this->render('backend/createpostview', [
+			'categories' => $categories
+		]);
 	}
 
 	/**
@@ -29,7 +36,7 @@ class AdminController extends \blogApp\core\Controller
 	public function newPost()
 	{
 		$postManager = new PostManager();
-		if(!$postManager->addNewPost($_POST['author'], $_POST['title'], $_POST['content'])){
+		if(!$postManager->addNewPost($_POST['categorie_radio'], $_POST['author'], $_POST['title'], $_POST['content'])){
 			\blogApp\core\MessageAlert::messageType('danger', 'Impossible de posté votre chapitre réessayer plus tard');
 		    $this->redirect('/admin');
 		} else {
@@ -65,13 +72,17 @@ class AdminController extends \blogApp\core\Controller
 			$_GET['id'] = intval($_GET['id']);
             $postManager = new PostManager();
 		    $commentManager = new CommentManager();
+		    $categorieManager = new CategorieManager();
+                       
 
 		    $post = $postManager->getPost($_GET['id']);
 		    $comments = $commentManager->getComments($_GET['id']);
+		    $categories = $categorieManager->getCategories();
 
 		    $this->render('backend/modifypostview', [
 		        'post' => $post,
 		        'comments' => $comments[0],
+		        'categories' => $categories,
 		        'totalPages' => $comments[1],
 		        'currentPage' => $comments[2]
 		    ]);   
@@ -91,7 +102,7 @@ class AdminController extends \blogApp\core\Controller
 		if (isset($_POST['modify'])) {
 			if (isset($_GET['id']) && $_GET['id'] > 0) {
 	            $postManager = new PostManager();
-			    $post = $postManager->updatePost($_POST['title'], $_POST['content'], $_GET['id']);
+			    $post = $postManager->updatePost($_POST['categorie_radio'], $_POST['title'], $_POST['content'], $_GET['id']);
 	 
 	 			\blogApp\core\MessageAlert::messageType('success', 'Votre chapitre a été modifié avec succès');
 	 			$this->redirect('/admin');

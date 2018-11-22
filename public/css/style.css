@@ -52,6 +52,12 @@ h2
 
 /*===  ADMIN  ===*/
 
+.title-post-admin-home
+{
+    text-align: left;
+    font-size: 1.2em;
+}
+
 #editeur
 {
     width: 500px; 
