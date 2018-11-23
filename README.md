@@ -1,7 +1,7 @@
 # Dwj-projet5-ActuFoot
-<p>Réalisation d'un blog.</p>
+<p>Réalisation d'info sportive (football)</p>
 <p>Client : Jean Forteroche (écrivain).</p>
-<p>Besoin du client :</p>
+<p>Besoin pour le site :</p>
 <ul>
 	<li>Interface CRUD (Create, Read, Update, Delete)</li>
 	<li>Interface de rédaction -> TinyMCE</li>
@@ -14,14 +14,16 @@
 	<li>Frontend lecture de billet</li>
 	<li>Backend administration des billets pour l'écture</li>
 	<li>CRUD (create, raed, update, delete)</li>
+	<li>Possibilité de classer les articles par catégorie, avoir acces a des pages dédié a celle-ci coté visiteur</li>
+	<li>Pouvoir ajouter des images d'entete a chaque article</li>
 	<li>Ajout de commentaires possible + modération dans administration</li>
-	<li>Possible de signaler les billets</li>
+	<li>Possible de signaler les commentaires</li>
 	<li>Interface d'administration basé sur une interface WYSIWYG basé sur TinyMCE.</li>
 	<li>Favoriser la POO</li>
 	<li>Pattern MVC</li>
 </ul>
 <p>Acces à l'administration :</p>
 <ul>
-	<li>Authentifiant: Jean</li>
-	<li>Mot de passe: Jean1234</li>
+	<li>Authentifiant: Ludo</li>
+	<li>Mot de passe: 12Ludoactufoot34</li>
 
