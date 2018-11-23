@@ -1,6 +1,5 @@
 # Dwj-projet5-ActuFoot
 <p>Réalisation d'info sportive (football)</p>
-<p>Client : Jean Forteroche (écrivain).</p>
 <p>Besoin pour le site :</p>
 <ul>
 	<li>Interface CRUD (Create, Read, Update, Delete)</li>
