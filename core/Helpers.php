@@ -30,3 +30,22 @@
 			echo "checked";
 		}
 	}
+
+	function truncate($text, $length, $textEnd)
+	{
+		if (strlen($text) >= $length) {
+			$text = substr($text, 0, $length);
+			$espace = strrpos($text, " ");
+			$text = substr($text, 0, $espace) . $textEnd;
+		}
+		return $text;
+	}
+
+	function getCategorys()
+	{
+		$categorieManager = new \blogApp\src\model\CategorieManager();
+        $categories = $categorieManager->getCategories();
+        foreach ($categories as $categorie) :
+            echo "<a class='dropdown-item' href='" . PATH_PREFIX . "/categorie/" . urldecode($categorie['name']) . "?id=" . $categorie['id'] . "'>" . $categorie['name'] . "</a>";
+        endforeach;
+	}

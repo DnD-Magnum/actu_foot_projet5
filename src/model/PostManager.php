@@ -6,6 +6,11 @@ namespace blogApp\src\model;
  */
 class PostManager extends \blogApp\core\Model
 {
+	function __construct()
+	{
+		parent::__construct();
+		$this->categorieManager = new CategorieManager();
+	}
 
 	/**
      * Recupere le nombre de post
@@ -65,7 +70,7 @@ class PostManager extends \blogApp\core\Model
 	public function getRecentPosts()
 	{
 		// On récupère les 5 derniers billets
-		$req = $this->db->query('SELECT posts.id, author, title, image_path, post, id_categorie, categories.name, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM posts LEFT JOIN categories ON posts.id_categorie = categories.id ORDER BY date_post DESC LIMIT 1, 20');
+		$req = $this->db->query('SELECT posts.id, author, title, image_path, post, id_categorie, categories.name, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM posts LEFT JOIN categories ON posts.id_categorie = categories.id ORDER BY date_post DESC LIMIT 0, 20');
 		$req = $req->fetchAll();
 
 		return $req;
@@ -85,6 +90,16 @@ class PostManager extends \blogApp\core\Model
 	    return $post;
 	}
 
+	public function getOrCreateCategory($categoryIdOrName)
+	{
+		if (is_numeric($categoryIdOrName)) {
+			return $this->categorieManager->getCategorie($categoryIdOrName);
+		}
+		return [
+			"id" => $this->categorieManager->addNewCategorie($categoryIdOrName)
+		];
+	}
+
 	/**
 	 * Cree un nouveau post 
 	 * @param auteur du post $string
@@ -92,36 +107,17 @@ class PostManager extends \blogApp\core\Model
 	 * @param contenu du post $string
 	 * Retourne une variable
 	 */
-	public function addNewPost($categorieName, $author, $title, $post)
+	public function addNewPost($categoryIdOrName, $author, $title, $post)
 	{
-		if (!empty($categorieName) && !empty($author) && !empty($title) && !empty($post) && isset($_SESSION['token']))
+		if (!empty($categoryIdOrName) && !empty($author) && !empty($title) && !empty($post) && isset($_SESSION['token']))
 		{
-			if ($categorieName == 'autre') {
-			$this->addNewCategorie($_POST['autre_text']);
-				$categorieName = $_POST['autre_text'];
-			}
-			$req = $this->db->prepare('SELECT id FROM categories WHERE name = ?');
-			$req->execute(array($categorieName));
-			$id_categorie = $req->fetch();
+			$id_category = $this->getOrCreateCategory($categoryIdOrName)['id'];
 
 			$newPost = $this->db->prepare('INSERT INTO posts (author, title, post, id_categorie, date_post) VALUES(?, ?, ?, ?, NOW())');
-		    $affectedPost = $newPost->execute(array($author, $title, $post, $id_categorie['id']));
+		    $affectedPost = $newPost->execute(array($author, $title, $post, $id_category));
 
 		    return $affectedPost;
 		}
-	}
-
-	/**
-	 * Cree une nouvelle categorie
-	 * @param nom de la categorie $string
-	 * Retourne une variable
-	 */
-	public function addNewCategorie($name)
-	{
-		$newCategorie = $this->db->prepare('INSERT INTO categories (name) VALUES(?)');
-		$affectedCategorie = $newCategorie->execute(array($name));
-
-	    return $affectedCategorie;
 	}
 
 	/**
@@ -132,18 +128,12 @@ class PostManager extends \blogApp\core\Model
 	 * @param id du post $number
 	 * Retourne une variable
 	 */
-	public function updatePost($categorieName, $title, $post, $idPost)
+	public function updatePost($categoryIdOrName, $title, $post, $idPost)
 	{
-		if ($categorieName == 'autre') {
-			$this->addNewCategorie($_POST['autre_text']);
-			$categorieName = $_POST['autre_text'];
-		}
-		$req = $this->db->prepare('SELECT id FROM categories WHERE name = ?');
-		$req->execute(array($categorieName));
-		$id_categorie = $req->fetch();
+		$id_category = $this->getOrCreateCategory($categoryIdOrName)['id'];		
 
 		$newPost = $this->db->prepare('UPDATE posts set title = ?, post = ?, id_categorie = ? WHERE id = ?');
-		$affectedPost = $newPost->execute(array($title, $post, $id_categorie['id'], $idPost));
+		$affectedPost = $newPost->execute(array($title, $post, $id_category, $idPost));
 
 		return $affectedPost;
 	}

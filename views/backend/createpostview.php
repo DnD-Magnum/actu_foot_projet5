@@ -14,7 +14,7 @@
 	foreach ($categories as $categorie) :
 	?>
 	<div class="form-check">
-	    <input class="form-check-input" type="radio" name="categorie_radio" id="<?= $categorie['name'] ?>" value="<?= $categorie['name'] ?>">
+	    <input class="form-check-input" type="radio" name="categorie_radio" id="<?= $categorie['name'] ?>" value="<?= $categorie['id'] ?>">
 	    <label class="form-check-label" for="<?= $categorie['name'] ?>">
 	    	<?= $categorie['name'] ?>
 	    </label>

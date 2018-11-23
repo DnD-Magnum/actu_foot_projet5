@@ -35,8 +35,13 @@ class AdminController extends \blogApp\core\Controller
 	 */
 	public function newPost()
 	{
+		$categorieIdOrName = $_POST['categorie_radio'] == 'autre' ? $_POST['autre_text'] : $_POST['categorie_radio'];
 		$postManager = new PostManager();
-		if(!$postManager->addNewPost($_POST['categorie_radio'], $_POST['author'], $_POST['title'], $_POST['content'])){
+
+		//if(isset($_FILES))
+
+
+		if(!$postManager->addNewPost($categorieIdOrName, $_POST['author'], $_POST['title'], $_POST['content'])){
 			\blogApp\core\MessageAlert::messageType('danger', 'Impossible de posté votre chapitre réessayer plus tard');
 		    $this->redirect('/admin');
 		} else {
@@ -102,7 +107,8 @@ class AdminController extends \blogApp\core\Controller
 		if (isset($_POST['modify'])) {
 			if (isset($_GET['id']) && $_GET['id'] > 0) {
 	            $postManager = new PostManager();
-			    $post = $postManager->updatePost($_POST['categorie_radio'], $_POST['title'], $_POST['content'], $_GET['id']);
+	            $categorieIdOrName = $_POST['categorie_radio'] == 'autre' ? $_POST['autre_text'] : $_POST['categorie_radio'];
+			    $post = $postManager->updatePost($categorieIdOrName, $_POST['title'], $_POST['content'], $_GET['id']);
 	 
 	 			\blogApp\core\MessageAlert::messageType('success', 'Votre chapitre a été modifié avec succès');
 	 			$this->redirect('/admin');

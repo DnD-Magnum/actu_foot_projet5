@@ -7,6 +7,7 @@ namespace blogApp\src\model;
  */
 class CategorieManager extends \blogApp\core\Model
 {
+
 	/**
 	 * Recupere toutes les categorie existante
 	 * Retourne une variable
@@ -18,6 +19,27 @@ class CategorieManager extends \blogApp\core\Model
 		$req = $req->fetchAll();
 
 		return $req;
+	}
+
+	/**
+	 * Cree une nouvelle categorie
+	 * @param nom de la categorie $string
+	 * Retourne une variable
+	 */
+	public function addNewCategorie($name)
+	{
+		$newCategorie = $this->db->prepare('INSERT INTO categories (name) VALUES(?)');
+		$affectedCategorie = $newCategorie->execute(array($name));
+
+	    return $this->db->lastInsertId();
+	}
+
+	public function getCategorie($categorieId)
+	{
+		$req = $this->db->prepare('SELECT * FROM posts WHERE id_categorie = ?');
+		$req->execute([$categorieId]);
+		$categorie = $req->fetch();
+		return $categorie;
 	}
 
 	/**

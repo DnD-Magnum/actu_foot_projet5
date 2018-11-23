@@ -14,23 +14,23 @@ class Router
 	 *  => Associe le chemin au controller a instancier @ Associe la fonction
 	 */
 	private $_router = [
-	'#^/$#' => 'BlogController@recentPosts',
-    '#^/toutes-les-news#' => 'BlogController@allPosts',
-    '#^/post#' => 'BlogController@post',
-    '#^/contact$#' => 'BlogController@contact',
-    '#^/categorie/#' => 'BlogController@addPostCategorie',
-    '#^/addcomment#' => 'BlogController@addComment',
-    '#^/signalcomment#' => 'BlogController@signalComment',
-    '#^/admin$#' => 'AdminController@allPostsAdmin',
-    '#^/admin/editer-post#' => 'AdminController@editPost',
-    '#^/admin/modifier-post#' => 'AdminController@modaratePost',
-    '#^/admin/newpost#' => 'AdminController@newPost',
-    '#^/admin/configurepost#' => 'AdminController@configuratePost',
-    '#^/admin/configurecomment#' => 'AdminController@configurateComment',
-    '#^/admin/comment#' => 'AdminController@modarateComment',
-    '#^/verifypass#' => 'AdminController@adminConnect',
-    '#^/deconnexion#' => 'AdminController@disconect',
-    '#^/admin-login$#' => 'AdminController@login'
+	'/$' => 'BlogController@recentPosts',
+    '/toutes-les-news' => 'BlogController@allPosts',
+    '/post' => 'BlogController@post',
+    '/contact$' => 'BlogController@contact',
+    '/categorie/' => 'BlogController@addPostCategorie',
+    '/addcomment' => 'BlogController@addComment',
+    '/signalcomment' => 'BlogController@signalComment',
+    '/admin$' => 'AdminController@allPostsAdmin',
+    '/admin/editer-post' => 'AdminController@editPost',
+    '/admin/modifier-post' => 'AdminController@modaratePost',
+    '/admin/newpost' => 'AdminController@newPost',
+    '/admin/configurepost' => 'AdminController@configuratePost',
+    '/admin/configurecomment' => 'AdminController@configurateComment',
+    '/admin/comment' => 'AdminController@modarateComment',
+    '/verifypass' => 'AdminController@adminConnect',
+    '/deconnexion' => 'AdminController@disconect',
+    '/admin-login$' => 'AdminController@login'
 	];
 
 
@@ -59,7 +59,7 @@ class Router
 		{
 			foreach($this->_router as $key => $route) 
 			{
-				if (preg_match($key, $path)) 
+				if (preg_match('#^' . $key . '#', $path)) 
 				{
 					$run = explode('@', $route);
 					$run[0] = "\blogApp\src\controller\\" . $run[0];

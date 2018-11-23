@@ -19,11 +19,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <?php 
-                       $categorieManager = new \blogApp\src\model\CategorieManager();
-                       $categories = $categorieManager->getCategories();
-                       foreach ($categories as $categorie) :
-                                echo "<a class='dropdown-item' href='" . PATH_PREFIX . "/categorie/" . urldecode($categorie['name']) . "?id=" . $categorie['id'] . "'>" . $categorie['name'] . "</a>";
-                        endforeach;
+                        getCategorys();
                     ?>
                 </div>
             </li>
