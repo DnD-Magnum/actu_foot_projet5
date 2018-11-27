@@ -67,6 +67,10 @@ h2
     overflow: auto; 
 }
 
+.label_margin
+{
+    margin-top: 10px;
+}
 
 /*===  CHAPITRE  ===*/
 

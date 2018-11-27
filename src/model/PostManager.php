@@ -113,8 +113,14 @@ class PostManager extends \blogApp\core\Model
 		{
 			$id_category = $this->getOrCreateCategory($categoryIdOrName)['id'];
 
-			$newPost = $this->db->prepare('INSERT INTO posts (author, title, post, id_categorie, date_post) VALUES(?, ?, ?, ?, NOW())');
-		    $affectedPost = $newPost->execute(array($author, $title, $post, $id_category));
+			$nom = md5(uniqid(rand(), true));
+			$ext = substr(strrchr($_FILES['picture']['name'],'.'),1);
+			$uploadFile = new \blogApp\core\UploadFile();
+			$uploadFile->upload('picture', 'images/' . $nom . '.' . $ext, false, array('png','gif','jpg','jpeg') );
+			$picturePath = 'public/images/' . $nom . '.' . $ext;
+
+			$newPost = $this->db->prepare('INSERT INTO posts (author, title, post, image_path, id_categorie, date_post) VALUES(?, ?, ?, ?, ?, NOW())');
+		    $affectedPost = $newPost->execute(array($author, $title, $post, $picturePath, $id_category));
 
 		    return $affectedPost;
 		}

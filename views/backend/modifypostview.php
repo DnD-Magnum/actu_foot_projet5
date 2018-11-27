@@ -29,8 +29,10 @@
 	    </label>
 	</div>
 	<input type="text" id="autre_text" name="autre_text" class="form-control col-md-3"/>
-	<label for="title">Titre du post</label> : <input type="text" id="title" name="title" value="<?= $post['title']; ?>" class="form-control col-md-3" placeholder="Ex : Chapitre 1 , 2 . . ." required/><br/>
-	<label>Contenu</label> :  <textarea name="content" class="tiny-area form-control col-md-12" id="content" required>
+	<label for="title" class="label_margin">Titre du post</label> : <input type="text" id="title" name="title" value="<?= $post['title']; ?>" class="form-control col-md-3" placeholder="Ex : Chapitre 1 , 2 . . ." required/><br/>
+	<label for="picture">Ajouter une photo :</label>
+    <input type="file" class="form-control-file col-md-4" id="picture">
+	<label class="label_margin">Contenu</label> :  <textarea name="content" class="tiny-area form-control col-md-12" id="content" required>
 		<?= $post['post']; ?>
 	</textarea><br/>
 	<?php \blogApp\core\Csrf::generateInput(); ?>
