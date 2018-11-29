@@ -1,5 +1,6 @@
 <?php
 namespace blogApp\src\model;
+use \blogApp\core\UploadFile;
 /**
  * Class PostManager
  * Model qui gere les posts
@@ -29,7 +30,7 @@ class PostManager extends \blogApp\core\Model
 	 */
 	public function getAllPosts()
 	{
-		$nbPostsPerPage = 5;
+		$nbPostsPerPage = 10;
 		$totalPosts = $this->postCount();
 		$totalPages = ceil($totalPosts / $nbPostsPerPage);
 
@@ -83,13 +84,18 @@ class PostManager extends \blogApp\core\Model
 	 */
 	public function getPost($postId)
 	{
-	    $req = $this->db->prepare('SELECT posts.id, author,title, image_path, post, id_categorie, categories.name, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM posts LEFT JOIN categories ON posts.id_categorie = categories.id WHERE posts.id = ?');
+	    $req = $this->db->prepare('SELECT posts.id, author,title, image_path, post, id_categorie, image_path, categories.name, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM posts LEFT JOIN categories ON posts.id_categorie = categories.id WHERE posts.id = ?');
 	    $req->execute(array($postId));
 	    $post = $req->fetch();
 
 	    return $post;
 	}
 
+	/**
+	 * Creer ou recupere l'id d'une categorie
+	 * @param $_post radio du formuaire
+	 * Retourne une variable
+	 */
 	public function getOrCreateCategory($categoryIdOrName)
 	{
 		if (is_numeric($categoryIdOrName)) {
@@ -102,6 +108,7 @@ class PostManager extends \blogApp\core\Model
 
 	/**
 	 * Cree un nouveau post 
+	 * @param categorie du post $string
 	 * @param auteur du post $string
 	 * @param titre du post $string
 	 * @param contenu du post $string
@@ -113,11 +120,8 @@ class PostManager extends \blogApp\core\Model
 		{
 			$id_category = $this->getOrCreateCategory($categoryIdOrName)['id'];
 
-			$nom = md5(uniqid(rand(), true));
-			$ext = substr(strrchr($_FILES['picture']['name'],'.'),1);
-			$uploadFile = new \blogApp\core\UploadFile();
-			$uploadFile->upload('picture', 'images/' . $nom . '.' . $ext, false, array('png','gif','jpg','jpeg') );
-			$picturePath = 'public/images/' . $nom . '.' . $ext;
+			$uploadFile = new UploadFile();
+			$picturePath = $uploadFile->uploadImage('picture');
 
 			$newPost = $this->db->prepare('INSERT INTO posts (author, title, post, image_path, id_categorie, date_post) VALUES(?, ?, ?, ?, ?, NOW())');
 		    $affectedPost = $newPost->execute(array($author, $title, $post, $picturePath, $id_category));

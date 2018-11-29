@@ -36,7 +36,7 @@ class CategorieManager extends \blogApp\core\Model
 
 	public function getCategorie($categorieId)
 	{
-		$req = $this->db->prepare('SELECT * FROM posts WHERE id_categorie = ?');
+		$req = $this->db->prepare('SELECT * FROM categories WHERE id = ?');
 		$req->execute([$categorieId]);
 		$categorie = $req->fetch();
 		return $categorie;

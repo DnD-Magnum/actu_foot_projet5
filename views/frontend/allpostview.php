@@ -6,10 +6,11 @@
 
 
 <!-- ===  PARTIE POSTS  === -->
+<div class="home-page-posts">
 <?php
 foreach ($posts as $post):
 ?>
-	<div class="news shadow p-3 mb-5 bg-white rounded">
+	<div class="col-md-5 col-12 news shadow p-3 mb-5 bg-white rounded">
 		<p><strong><a href="<?= PATH_PREFIX . '/categorie/' . $post['name'] . '?id=' . $post['id_categorie'] ?>"><?= $post['name'] ?></a></strong></p>
 		<h2>
 			<a href="<?= PATH_PREFIX ?>/post?id=<?= $post['id'] ?>"><?= htmlspecialchars($post['title']); ?></a>
@@ -19,12 +20,7 @@ foreach ($posts as $post):
 			    
 		<p class="posts">
 			<?php 
-			if (strlen($post['post']) >= 350) {
-				$post['post'] = substr($post['post'], 0, 350);
-				$espace = strrpos($post['post'], " ");
-				$post['post'] = substr($post['post'], 0, $espace) . " ...   <a href='" . PATH_PREFIX . "/post?id=" . $post['id'] . "'><em>( lire la suite )</em></a>";
-			}
-			echo $post['post']; 
+			echo truncate($post['post'] , 150, " ...   <a href='" . PATH_PREFIX . "/post?id=" . $post['id'] . "'><em>( lire la suite )</em></a>"); 
 			?>
 		</p>
 		<p>
@@ -39,6 +35,7 @@ foreach ($posts as $post):
 endforeach;
 // ===> PAGINATION
 ?>
+</div>
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
 	<?php

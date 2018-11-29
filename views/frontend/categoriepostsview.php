@@ -19,12 +19,7 @@ foreach ($posts as $post):
 			    
 		<p class="posts">
 			<?php 
-			if (strlen($post['post']) >= 350) {
-				$post['post'] = substr($post['post'], 0, 350);
-				$espace = strrpos($post['post'], " ");
-				$post['post'] = substr($post['post'], 0, $espace) . " ...   <a href='" . PATH_PREFIX . "/post?id=" . $post['id'] . "'><em>( lire la suite )</em></a>";
-			}
-			echo $post['post']; 
+				echo truncate($post['post'] , 350, " ...   <a href='" . PATH_PREFIX . "/post?id=" . $post['id'] . "'><em>( lire la suite )</em></a>"); 
 			?>
 		</p>
 		<p>
