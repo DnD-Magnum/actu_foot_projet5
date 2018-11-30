@@ -10,18 +10,12 @@
 
 <form action="<?= PATH_PREFIX ?>/admin/newpost?token=<?= $_SESSION['token'] ?>" method="post" enctype="multipart/form-data" class="form-group">
 	<p>Catégorie :</p>
-	<?php
-	foreach ($categories as $categorie) :
-	?>
-	<div class="form-check">
-	    <input class="form-check-input" type="radio" name="categorie_radio" id="<?= $categorie['name'] ?>" value="<?= $categorie['id'] ?>">
-	    <label class="form-check-label" for="<?= $categorie['name'] ?>">
-	    	<?= $categorie['name'] ?>
-	    </label>
-	</div>
-	<?php
-	endforeach;
-	?>
+	<select name="categorie_radio">
+		<option value="">Sélectionner une catégorie ...</option>
+		<?php foreach ($categories as $categorie) : ?>
+			<option value="<?= $categorie['id'] ?>"><?= $categorie['name'] ?></option>
+		<?php endforeach; ?>
+	</select>
 	<div class="form-check">
 	    <input class="form-check-input" type="radio" name="categorie_radio" id="autre" value="autre">
 	    <label class="form-check-label" for="autre">

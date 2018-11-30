@@ -1,6 +1,6 @@
 <?php
 namespace blogApp\src\model;
-use \blogApp\core\UploadFile;
+use \blogApp\core\File;
 /**
  * Class PostManager
  * Model qui gere les posts
@@ -43,7 +43,7 @@ class PostManager extends \blogApp\core\Model
 
 		$depart = ($currentPage - 1) * $nbPostsPerPage;
 		// On récupère les  billets
-		$req = $this->db->query('SELECT posts.id, author, title, image_path, post, id_categorie, categories.name, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM posts LEFT JOIN categories ON posts.id_categorie = categories.id ORDER BY date_post DESC LIMIT ' . $depart . ', ' . $nbPostsPerPage);
+		$req = $this->db->query('SELECT posts.id, author, title, image_path, post, id_categorie, categories.name, categories.slug, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM posts LEFT JOIN categories ON posts.id_categorie = categories.id ORDER BY date_post DESC LIMIT ' . $depart . ', ' . $nbPostsPerPage);
 		$req = $req->fetchAll();
 
 		$varsForPagination = [$req, $totalPages, $currentPage];
@@ -71,7 +71,7 @@ class PostManager extends \blogApp\core\Model
 	public function getRecentPosts()
 	{
 		// On récupère les 5 derniers billets
-		$req = $this->db->query('SELECT posts.id, author, title, image_path, post, id_categorie, categories.name, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM posts LEFT JOIN categories ON posts.id_categorie = categories.id ORDER BY date_post DESC LIMIT 0, 20');
+		$req = $this->db->query('SELECT posts.id, author, title, image_path, post, id_categorie, categories.name, categories.slug, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM posts LEFT JOIN categories ON posts.id_categorie = categories.id ORDER BY date_post DESC LIMIT 0, 20');
 		$req = $req->fetchAll();
 
 		return $req;
@@ -84,7 +84,7 @@ class PostManager extends \blogApp\core\Model
 	 */
 	public function getPost($postId)
 	{
-	    $req = $this->db->prepare('SELECT posts.id, author,title, image_path, post, id_categorie, image_path, categories.name, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM posts LEFT JOIN categories ON posts.id_categorie = categories.id WHERE posts.id = ?');
+	    $req = $this->db->prepare('SELECT posts.id, author,title, image_path, post, id_categorie, image_path, categories.name, categories.slug, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM posts LEFT JOIN categories ON posts.id_categorie = categories.id WHERE posts.id = ?');
 	    $req->execute(array($postId));
 	    $post = $req->fetch();
 
@@ -120,8 +120,7 @@ class PostManager extends \blogApp\core\Model
 		{
 			$id_category = $this->getOrCreateCategory($categoryIdOrName)['id'];
 
-			$uploadFile = new UploadFile();
-			$picturePath = $uploadFile->uploadImage('picture');
+			$picturePath = File::uploadImage('picture');
 
 			$newPost = $this->db->prepare('INSERT INTO posts (author, title, post, image_path, id_categorie, date_post) VALUES(?, ?, ?, ?, ?, NOW())');
 		    $affectedPost = $newPost->execute(array($author, $title, $post, $picturePath, $id_category));
@@ -132,7 +131,7 @@ class PostManager extends \blogApp\core\Model
 
 	/**
 	 * Modifie un post
-	 * @param titre de la categorie
+	 * @param id ou nom de la categorie $number/$string
 	 * @param titre du post $string
 	 * @param contenu du post $string
 	 * @param id du post $number
@@ -140,10 +139,21 @@ class PostManager extends \blogApp\core\Model
 	 */
 	public function updatePost($categoryIdOrName, $title, $post, $idPost)
 	{
-		$id_category = $this->getOrCreateCategory($categoryIdOrName)['id'];		
+		$id_category = $this->getOrCreateCategory($categoryIdOrName)['id'];	
 
-		$newPost = $this->db->prepare('UPDATE posts set title = ?, post = ?, id_categorie = ? WHERE id = ?');
-		$affectedPost = $newPost->execute(array($title, $post, $id_category, $idPost));
+		$req = $this->db->prepare('SELECT image_path FROM posts WHERE id = ?');
+		$req->execute(array($idPost));
+		$oldPath = $req->fetch();
+		$old = str_replace('public/' ,"",$oldPath['image_path']);
+		$filePath = File::replaceImage('picture', $old);
+
+		if($filePath){
+			$newPost = $this->db->prepare('UPDATE posts set title = ?, post = ?, image_path = ?, id_categorie = ? WHERE id = ?');
+			$affectedPost = $newPost->execute(array($title, $post, $filePath, $id_category, $idPost));
+		} else {
+			$newPost = $this->db->prepare('UPDATE posts set title = ?, post = ?, id_categorie = ? WHERE id = ?');
+			$affectedPost = $newPost->execute(array($title, $post, $id_category, $idPost));
+		}
 
 		return $affectedPost;
 	}
@@ -155,6 +165,12 @@ class PostManager extends \blogApp\core\Model
 	 */
 	public function deletePost($idPost)
 	{
+		$req = $this->db->prepare('SELECT image_path FROM posts WHERE id = ?');
+		$req->execute(array($idPost));
+		$toDelete = $req->fetch();
+		$delete = str_replace('public/' ,"",$toDelete['image_path']);
+		File::remove($delete);
+
 		$deletedPost = $this->db->prepare('DELETE FROM posts WHERE posts . id = ?');
 		$affectedPost = $deletedPost->execute(array($idPost));
 

@@ -7,7 +7,7 @@
 
 
 <!-- ===  PARTIE POST  === -->
-<p><strong><a href="<?= PATH_PREFIX . '/categorie/' . $post['name'] . '?id=' . $post['id_categorie'] ?>"><?= $post['name'] ?></a></strong></p>
+<p><strong><a href="<?= PATH_PREFIX . '/categorie/' . $post['slug'] . '?id=' . $post['id_categorie'] ?>"><?= $post['name'] ?></a></strong></p>
 <h2>
     <?= htmlspecialchars($post['title']); ?>
 </h2>

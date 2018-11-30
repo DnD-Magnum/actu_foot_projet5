@@ -38,9 +38,6 @@ class AdminController extends \blogApp\core\Controller
 		$categorieIdOrName = $_POST['categorie_radio'] == 'autre' ? $_POST['autre_text'] : $_POST['categorie_radio'];
 		$postManager = new PostManager();
 
-		//if(isset($_FILES))
-
-
 		if(!$postManager->addNewPost($categorieIdOrName, $_POST['author'], $_POST['title'], $_POST['content'])){
 			\blogApp\core\MessageAlert::messageType('danger', 'Impossible de posté votre chapitre réessayer plus tard');
 		    $this->redirect('/admin');
@@ -98,37 +95,53 @@ class AdminController extends \blogApp\core\Controller
 	}
 
 	/**
+	 * Modifie un post
+	 */
+	public function modifyPost()
+	{
+		if (isset($_GET['id']) && $_GET['id'] > 0) {
+	        $postManager = new PostManager();
+	        $categorieIdOrName = $_POST['categorie_radio'] == 'autre' ? $_POST['autre_text'] : $_POST['categorie_radio'];
+
+			$post = $postManager->updatePost($categorieIdOrName, $_POST['title'], $_POST['content'], $_GET['id']);
+	 
+	 		\blogApp\core\MessageAlert::messageType('success', 'Votre chapitre a été modifié avec succès');
+	 		$this->redirect('/admin');
+        } else {
+        	\blogApp\core\MessageAlert::messageType('danger', 'Votre chapitre n\'a pas été modifié réessayer plus tard');
+	 		$this->redirect('/admin');
+       	}
+	}
+
+	/**
+	 * Supprime un post
+	 */
+	public function deletePost($idPost)
+	{
+		if (isset($_GET['id']) && $_GET['id'] > 0) {
+	        $postManager = new PostManager();
+
+			$post = $postManager->deletePost($_GET['id']);
+
+	 		\blogApp\core\MessageAlert::messageType('success', 'Votre chapitre a été supprimé avec succès');
+	 		$this->redirect('/admin');
+	    } else {
+	        \blogApp\core\MessageAlert::messageType('danger', 'Votre chapitre n\'a pas été supprimé réessayer plus tard');
+	 		$this->redirect('/admin');
+	    }
+	}
+
+	/**
 	 * Requete administration de modification ou suppression de post
 	 * Verifie Si la raquete est modifier ou supprimer
-	 * Execute la requete
+	 * Execute la bonne fonction
 	 */
 	public function configuratePost()
 	{
-		if (isset($_POST['modify'])) {
-			if (isset($_GET['id']) && $_GET['id'] > 0) {
-	            $postManager = new PostManager();
-	            $categorieIdOrName = $_POST['categorie_radio'] == 'autre' ? $_POST['autre_text'] : $_POST['categorie_radio'];
-			    $post = $postManager->updatePost($categorieIdOrName, $_POST['title'], $_POST['content'], $_GET['id']);
-	 
-	 			\blogApp\core\MessageAlert::messageType('success', 'Votre chapitre a été modifié avec succès');
-	 			$this->redirect('/admin');
-        	} else {
-        		\blogApp\core\MessageAlert::messageType('danger', 'Votre chapitre n\'a pas été modifié réessayer plus tard');
-	 			$this->redirect('/admin');
-       		}
-		} else if (isset($_POST['delete'])) {
-			if (isset($_GET['id']) && $_GET['id'] > 0) {
-	            $postManager = new PostManager();
-
-			    $post = $postManager->deletePost($_GET['id']);
-
-	 			\blogApp\core\MessageAlert::messageType('success', 'Votre chapitre a été supprimé avec succès');
-	 			$this->redirect('/admin');
-	        } else {
-	        	\blogApp\core\MessageAlert::messageType('danger', 'Votre chapitre n\'a pas été supprimé réessayer plus tard');
-	 			$this->redirect('/admin');
-	        }
-		}
+		if (isset($_POST['modify']))
+			$this->modifyPost();
+		else if (isset($_POST['delete']))
+			$this->deletePost();
 	}
 
 	/**

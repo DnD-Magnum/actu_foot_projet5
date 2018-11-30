@@ -10,7 +10,7 @@
 foreach ($posts as $post):
 ?>
 	<div class="news shadow p-3 mb-5 bg-white rounded">
-		<p><strong><a href="<?= PATH_PREFIX . '/categorie/' . $categorie['name'] . '?id=' . $categorie['id'] ?>"><?= $categorie['name'] ?></a></strong></p>
+		<p><strong><a href="<?= PATH_PREFIX . '/categorie/' . $categorie['slug'] . '?id=' . $categorie['id'] ?>"><?= $categorie['name'] ?></a></strong></p>
 		<h2>
 			<a href="<?= PATH_PREFIX ?>/post?id=<?= $post['id'] ?>"><?= htmlspecialchars($post['title']); ?></a>
 		</h2>

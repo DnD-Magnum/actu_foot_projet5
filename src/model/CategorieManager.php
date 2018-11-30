@@ -14,8 +14,7 @@ class CategorieManager extends \blogApp\core\Model
 	 */
 	public function getCategories()
 	{
-		// On récupère les  billets
-		$req = $this->db->query('SELECT id, name FROM categories');
+		$req = $this->db->query('SELECT id, name, slug FROM categories ORDER BY name ASC');
 		$req = $req->fetchAll();
 
 		return $req;
@@ -28,12 +27,18 @@ class CategorieManager extends \blogApp\core\Model
 	 */
 	public function addNewCategorie($name)
 	{
-		$newCategorie = $this->db->prepare('INSERT INTO categories (name) VALUES(?)');
-		$affectedCategorie = $newCategorie->execute(array($name));
+		//+slug
+		$newCategorie = $this->db->prepare('INSERT INTO categories (name, slug) VALUES(?, ?)');
+		$affectedCategorie = $newCategorie->execute(array($name, slugify($name)));
 
 	    return $this->db->lastInsertId();
 	}
 
+	/**
+	 * Recupere les donnee d'une categorie
+	 * @param id de la categorie $string	 
+	 * Retourne une variable
+	 */
 	public function getCategorie($categorieId)
 	{
 		$req = $this->db->prepare('SELECT * FROM categories WHERE id = ?');
@@ -57,10 +62,16 @@ class CategorieManager extends \blogApp\core\Model
 
 	/**
 	 * Recupere tous les posts d'une caregorie
-	 * Retourne une variable
+	 * Avec pagination
+	 * @param id de la categorie $number
+	 * Retourne un tableau
 	 */
 	public function getCategoriePosts($categorieId)
 	{
+		$reqCategorie = $this->db->prepare('SELECT id, name, slug FROM categories WHERE id = ?');
+	    $reqCategorie->execute(array($categorieId));
+	    $categorie = $reqCategorie->fetch();
+
 		$nbPostPage = 5;
 		$totalPosts = $this->postCategorieCount($categorieId);
 		$totalPages = ceil($totalPosts/$nbPostPage);
@@ -73,10 +84,6 @@ class CategorieManager extends \blogApp\core\Model
 		}
 
 		$depart = ($currentPage - 1) * $nbPostPage;
-
-	    $reqCategorie = $this->db->prepare('SELECT id, name FROM categories WHERE id = ?');
-	    $reqCategorie->execute(array($categorieId));
-	    $categorie = $reqCategorie->fetch();
 
 	    $req = $this->db->prepare('SELECT id, author, title, image_path, post, id_categorie, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM posts WHERE id_categorie = ? ORDER BY date_post DESC LIMIT ' . $depart . ', ' . $nbPostPage);
 	    $req->execute(array($categorieId));

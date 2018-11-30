@@ -8,19 +8,14 @@
 <h1>Modifier post</h1>
 
 <form action="<?= PATH_PREFIX ?>/admin/configurepost?id=<?= $post['id'] ?>&token=<?= $_SESSION['token'] ?>" method="post" enctype="multipart/form-data" class="form-group">
+
 	<p>Catégorie :</p>
-	<?php
-	foreach ($categories as $categorie) :
-	?>
-	<div class="form-check">
-	    <input class="form-check-input" type="radio" name="categorie_radio" id="<?= $categorie['name'] ?>" value="<?= $categorie['id'] ?>" <?php checked($post['name'], $categorie['name']); ?>>
-	    <label class="form-check-label" for="<?= $categorie['name'] ?>">
-	    	<?= $categorie['name'] ?>
-	    </label>
-	</div>
-	<?php
-	endforeach;
-	?>
+	<select name="categorie_radio">
+		<option value="">Sélectionner une catégorie ...</option>
+		<?php foreach ($categories as $categorie) : ?>
+			<option value="<?= $categorie['id'] ?>" <?php selected($post['name'], $categorie['name']); ?>><?= $categorie['name'] ?></option>
+		<?php endforeach; ?>
+	</select>
 	<div class="form-check">
 	    <input class="form-check-input" type="radio" name="categorie_radio" id="autre" value="autre">
 	    <label class="form-check-label" for="autre">
@@ -29,7 +24,6 @@
 	</div>
 	<input type="text" id="autre_text" name="autre_text" class="form-control col-md-3"/>
 	<label for="title" class="label_margin">Titre du post</label> : <input type="text" id="title" name="title" value="<?= $post['title']; ?>" class="form-control col-md-3" placeholder="Ex : Chapitre 1 , 2 . . ." required/><br/>
-	<input type="hidden" name="picture_path" value="<?= $post['image_path'] ?>">
 	<label for="picture">Modifier photo :</label>
     <input type="file" class="form-control-file col-md-4" id="picture" name="picture">
 	<label class="label_margin">Contenu</label> :  <textarea name="content" class="tiny-area form-control col-md-12" id="content" required>
