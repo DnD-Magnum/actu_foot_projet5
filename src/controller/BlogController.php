@@ -66,6 +66,14 @@ class BlogController extends \blogApp\core\Controller
 	}
 
 	/**
+     * Redirige vers la vue game
+     */
+	public function game()
+	{
+		    $this->render('frontend/gameview');
+	}
+
+	/**
      * Recupere l id du post
      * rajoute le commentaire au post
      * Redirige vers la vue

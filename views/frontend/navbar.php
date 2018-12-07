@@ -23,6 +23,9 @@
                     ?>
                 </div>
             </li>
+            <li class="nav-item <?php active('#/mini-jeux#'); ?>">
+                <a class="nav-link" href="<?= PATH_PREFIX ?>/mini-jeux">Mini-jeux</a>
+            </li>
             <li class="nav-item <?php active('#/contact$#'); ?>">
                 <a class="nav-link" href="<?= PATH_PREFIX ?>/contact">Contact</a>
             </li>

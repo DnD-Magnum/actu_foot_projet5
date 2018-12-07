@@ -17,6 +17,7 @@ class Router
 	'/$' => 'BlogController@recentPosts',
     '/toutes-les-news' => 'BlogController@allPosts',
     '/post' => 'BlogController@post',
+    '/mini-jeux' => 'BlogController@game',
     '/contact$' => 'BlogController@contact',
     '/categorie/' => 'BlogController@addPostCategorie',
     '/addcomment' => 'BlogController@addComment',

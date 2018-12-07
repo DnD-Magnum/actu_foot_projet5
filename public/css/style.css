@@ -1,5 +1,6 @@
 /*===  GENERAL  ===*/
 
+
 .block_page
 {
 	width: 80%;
@@ -80,9 +81,6 @@ h2
     margin: 20px auto;
 }
 
-
-/*===  CHAPITRE  ===*/
-
 .contact
 {
     text-align: center;
@@ -98,6 +96,76 @@ h2
     font-size: 1.3em;
 }
 
+/*===  MINI-JEUX  ===*/
+
+.footbal_game
+{
+    width: 230px; 
+    height: 400px;
+    background-color: rgb(65, 117, 5);
+    color: #fff;
+    position: relative;
+}
+
+.header_game
+{
+    height: 23%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.point, .timer
+{
+    padding: 5px;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.point p, .timer p
+{
+    margin: 0;
+}
+
+.timer
+{
+
+}
+
+.point
+{
+    width: 30%;
+    background: rgb(126, 211, 33);
+    border-radius: 5px;
+}
+
+.number_game
+{
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.game
+{
+    padding: 10px;
+    height: 77%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    /*overflow: hidden;*/
+}
+
+.game img
+{
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    transition: 500ms;
+}
+
+.game img:hover
+{
+    cursor: pointer;
+}
 
 /*=====  PETITE RéSOLUTION  =====*/
 
