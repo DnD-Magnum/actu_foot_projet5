@@ -17,7 +17,7 @@
 		<?php endforeach; ?>
 	</select>
 	<div class="form-check">
-	    <input class="form-check-input" type="radio" name="categorie_radio" id="autre" value="autre">
+	    <input class="form-check-input" type="checkbox" name="categorie_radio" id="autre" value="autre">
 	    <label class="form-check-label" for="autre">
 	        creer autre :
 	    </label>

@@ -141,12 +141,14 @@ class PostManager extends \blogApp\core\Model
 	{
 		$id_category = $this->getOrCreateCategory($categoryIdOrName)['id'];	
 
-		$req = $this->db->prepare('SELECT image_path FROM posts WHERE id = ?');
-		$req->execute(array($idPost));
-		$oldPath = $req->fetch();
-		$old = str_replace('public/' ,"",$oldPath['image_path']);
-		$filePath = File::replaceImage('picture', $old);
-
+		if (isset($_FILES['picture']) && !empty($_FILES['picture']) && $_FILES['picture']['error'] == 0) {
+			$req = $this->db->prepare('SELECT image_path FROM posts WHERE id = ?');
+			$req->execute(array($idPost));
+			$oldPath = $req->fetch();
+			$old = str_replace('public/' ,"",$oldPath['image_path']);
+			$filePath = File::replaceImage('picture', $old);
+		}
+		
 		if($filePath){
 			$newPost = $this->db->prepare('UPDATE posts set title = ?, post = ?, image_path = ?, id_categorie = ? WHERE id = ?');
 			$affectedPost = $newPost->execute(array($title, $post, $filePath, $id_category, $idPost));
