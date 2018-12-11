@@ -167,6 +167,16 @@ h2
     cursor: pointer;
 }
 
+.game .replay
+{
+    cursor: pointer;
+}
+
+.hidden
+{
+    display: none;
+}
+
 /*=====  PETITE RéSOLUTION  =====*/
 
 @media screen and (max-width: 640px) 

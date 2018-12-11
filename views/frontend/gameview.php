@@ -19,6 +19,7 @@
 		</div>
 	</div>
 	<div class="game">
+		<p class="replay hidden">Rejouer</p>
 		<img src="public/images/ball.png" id="ballon" alt="ballon">
 	</div>
 </div>

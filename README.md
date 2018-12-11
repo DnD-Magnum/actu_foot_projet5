@@ -9,17 +9,18 @@
 </ul>
 <p>Contraintes techniques :</p>
 <ul>
+	<li>Pattern MVC</li>
 	<li>Base de bonnées MySQL</li>
+	<li>Favoriser la POO</li>
+	<li>Mini-jeux de jongle crée avec JavaScript</li>
 	<li>Frontend lecture de billet</li>
 	<li>Backend administration des billets pour l'écture</li>
 	<li>CRUD (create, raed, update, delete)</li>
-	<li>Possibilité de classer les articles par catégorie, avoir acces a des pages dédié a celle-ci coté visiteur</li>
+	<li>Possibilité de classer les articles par catégorie, avoir acces a des pages dédiées a celle-ci coté visiteur</li>
 	<li>Pouvoir ajouter des images d'entete a chaque article</li>
 	<li>Ajout de commentaires possible + modération dans administration</li>
 	<li>Possible de signaler les commentaires</li>
 	<li>Interface d'administration basé sur une interface WYSIWYG basé sur TinyMCE.</li>
-	<li>Favoriser la POO</li>
-	<li>Pattern MVC</li>
 </ul>
 <p>Acces à l'administration :</p>
 <ul>
