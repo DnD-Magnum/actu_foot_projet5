@@ -34,7 +34,6 @@ class File
 	*/
 	static function uploadImage($index)
 	{
-
 		$nom = md5(uniqid(rand(), true));
 		$ext = substr(strrchr($_FILES[$index]['name'],'.'),1);
 		if(self::upload($index, 'images/' . $nom . '.' . $ext, false, array('png','gif','jpg','jpeg') )){

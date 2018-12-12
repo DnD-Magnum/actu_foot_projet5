@@ -17,11 +17,9 @@ class BlogController extends \blogApp\core\Controller
      */
 	public function recentPosts(){
 		$postManager = new PostManager(); 
-		$header = $postManager->getLastPost();
 	    $posts = $postManager->getRecentPosts(); 
 
 		$this->render('frontend/recentpostview', [
-	        'header' => $header,
 	        'posts' => $posts
 	    ]);
 	}

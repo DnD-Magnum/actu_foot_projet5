@@ -21,7 +21,6 @@ function Jongle(){
 	 * lance les fonction a l'ouverture de la page
 	 */
 	this.init = function(){
-		//this.createGame();
 		this.ball.addEventListener('click', this.onClickBallon.bind(this));	
 		this.moveBall = this.moveBall.bind(this);
 		this.replayElt.addEventListener('click', this.newGame.bind(this));
@@ -35,31 +34,6 @@ function Jongle(){
 		element.setAttribute("class", className);
 		return element;
 	}
-
-	/**
-	 * Cree les element du jeux
-	 */
-	 /*
-	this.createGame = function(){
-		this.divHeaderGameElt = this.createElementWithClass("div", "header_game");
-		this.divGameElt = this.createElementWithClass("div", "game");
-
-		params.container.appendChild(this.divHeaderGameElt);
-		params.container.appendChild(this.divGameElt);
-
-		this.divTimerElt = this.createElementWithClass("div", "timer");
-		this.divPointElt = this.createElementWithClass("div", "point");
-
-		this.divHeaderGameElt.appendChild(this.divTimerElt);
-		this.divHeaderGameElt.appendChild(this.divPointElt);
-
-		this.firstParaTimerElt = document.createElement("p");
-		this.firstParaTimerElt.textContent = "Temps restant :"
-		this.secondParaTimerElt = this.createElementWithClass("p", "number_game");
-
-		this.firstParaTimerElt.appendChild(divTimerElt);
-		this.secondParaTimerElt.appendChild(divTimerElt);
-	}*/
 
 	/**
 	 * Apelle les fonction a executer lors du click sur le ballon
@@ -173,5 +147,4 @@ function Jongle(){
 	this.init();
 }
 
-//var divContainerElt = document.querySelector('.container_game');
 var game = new Jongle();

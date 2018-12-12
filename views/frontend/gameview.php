@@ -7,6 +7,7 @@
 
 
 <!-- ===  PARTIE JEUX  === -->
+<p><strong>Jonglez !</strong></p>
 <div class="footbal_game">
 	<div class="header_game">
 		<div class="timer">
