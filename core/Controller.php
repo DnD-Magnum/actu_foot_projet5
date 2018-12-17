@@ -33,7 +33,7 @@ class Controller
 	}
 
 	public function redirect($path){
-		header('Location:' . PATH_PREFIX . $path);
+		header('Location:' . PATH_PREFIX_P5 . $path);
 		exit();
 	}
 }

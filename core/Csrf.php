@@ -34,7 +34,7 @@ class Csrf
 	 */
 	static function verifyToken(){
 		if (isset($_POST) && (isset($_POST['token']) && $_POST['token'] != $_SESSION['token'])) {
-			header('Location:' . PATH_PREFIX . '/');
+			header('Location:' . PATH_PREFIX_P5 . '/');
 			\blogApp\core\MessageAlert::messageType("danger", "Impossible d'envoyer le formulaire");
 			die();
 		}

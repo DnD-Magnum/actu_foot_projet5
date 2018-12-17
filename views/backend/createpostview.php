@@ -8,7 +8,7 @@
 <!-- ===  PARTIE CREATION  === -->
 <h1>Editer nouveau post</h1>
 
-<form action="<?= PATH_PREFIX ?>/admin/newpost?token=<?= $_SESSION['token'] ?>" method="post" enctype="multipart/form-data" class="form-group">
+<form action="<?= PATH_PREFIX_P5 ?>/admin/newpost?token=<?= $_SESSION['token'] ?>" method="post" enctype="multipart/form-data" class="form-group">
 	<p>Catégorie :</p>
 	<select name="categorie_radio">
 		<option value="">Sélectionner une catégorie ...</option>

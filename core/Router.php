@@ -42,13 +42,13 @@ class Router
 	public function run()
 	{
 		$uri = explode('?', $_SERVER['REQUEST_URI']);
-		$path = str_replace(PATH_PREFIX ,"",$uri[0]);
+		$path = str_replace(PATH_PREFIX_P5 ,"",$uri[0]);
 		$adminVerify = explode('/', $path);
 
 		\blogApp\core\Csrf::verifyToken();
 		if (isset($adminVerify[1]) && $adminVerify[1] == 'admin' && !isset($_SESSION['connect'])) 
 		{
-			header('location: ' . PATH_PREFIX . '/admin-login');
+			header('location: ' . PATH_PREFIX_P5 . '/admin-login');
 			exit();
 		} else 
 		{

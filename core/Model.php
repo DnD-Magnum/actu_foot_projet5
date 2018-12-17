@@ -5,7 +5,7 @@ namespace blogApp\core;
  * Model principal
  * Gere les functions appeller dans les enfants
  */
-class Model 
+abstract class Model 
 {
 	protected $db;
     //private $_singleton = Database::getInstance();

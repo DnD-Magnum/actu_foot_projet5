@@ -8,7 +8,7 @@
         <title><?= $title ?></title>
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-        <link href="<?= PATH_PREFIX; ?>/public/css/style.css" rel="stylesheet" /> 
+        <link href="<?= PATH_PREFIX_P5; ?>/public/css/style.css" rel="stylesheet" /> 
     </head>
         
     <body>
@@ -29,7 +29,7 @@
             <!--  Boutton deconexion  -->  
             <?php 
                 if (isset($_SESSION['connect'])) {
-                    echo "<p><a href='" . PATH_PREFIX . "/deconnexion'>Déconnexion</a></p>";
+                    echo "<p><a href='" . PATH_PREFIX_P5 . "/deconnexion'>Déconnexion</a></p>";
                 }
             ?>
             
@@ -43,6 +43,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
         <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=psn53gxcft0i69plte6ewknlnv9gkoblqqf0hldcdabgk05v"></script>
-        <script type="text/javascript" src="<?= PATH_PREFIX; ?>/public/js/TinyMce.js"></script>
+        <script type="text/javascript" src="<?= PATH_PREFIX_P5; ?>/public/js/TinyMce.js"></script>
     </body>
 </html>

@@ -65,12 +65,11 @@ class PostManager extends \blogApp\core\Model
 	}
 
 	/**
-	 * Recupere les 5 derniers posts
+	 * Recupere les 20 derniers posts
 	 * Retourne une variable
 	 */
 	public function getRecentPosts()
 	{
-		// On récupère les 5 derniers billets
 		$req = $this->db->query('SELECT posts.id, author, title, image_path, post, id_categorie, categories.name, categories.slug, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM posts LEFT JOIN categories ON posts.id_categorie = categories.id ORDER BY date_post DESC LIMIT 0, 20');
 		$req = $req->fetchAll();
 

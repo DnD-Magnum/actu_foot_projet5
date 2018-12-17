@@ -3,7 +3,7 @@
 	/**
 	 * Variable constante qui a comme valeur le prefixe du chemin de l url
 	 */
-	define('PATH_PREFIX', '/courPHP/projet5_actufoot');
+	define('PATH_PREFIX_P5', '/courPHP/projet5_actufoot');
 
 	/**
 	 * Fonction qui renvoie la class active dans les onglets de la navbar
@@ -46,7 +46,7 @@
 		$categorieManager = new \blogApp\src\model\CategorieManager();
         $categories = $categorieManager->getCategories();
         foreach ($categories as $categorie) :
-            echo "<a class='dropdown-item' href='" . PATH_PREFIX . "/categorie/" . $categorie['slug'] . "?id=" . $categorie['id'] . "'>" . $categorie['name'] . "</a>";
+            echo "<a class='dropdown-item' href='" . PATH_PREFIX_P5 . "/categorie/" . $categorie['slug'] . "?id=" . $categorie['id'] . "'>" . $categorie['name'] . "</a>";
         endforeach;
 	}
 
